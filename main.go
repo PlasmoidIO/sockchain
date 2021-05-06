@@ -3,8 +3,8 @@ package main
 import (
 	"blockchain/blockchain"
 	"fmt"
+	"strconv"
 )
-
 
 func main() {
 	chain := blockchain.InitBlockChain()
@@ -14,8 +14,12 @@ func main() {
 	chain.AddBlock("Third block after genesis")
 
 	for _, block := range chain.Blocks {
+		pow := blockchain.NewProof(block)
+
 		fmt.Printf("Previous Hash: %x\n", block.PrevHash)
 		fmt.Printf("Data in Block: %s\n", block.Data)
-		fmt.Printf("Hash: %x\n\n", block.Hash)
+		fmt.Printf("Hash: %x\n", block.Hash)
+		fmt.Printf("Nonce: %d\n", block.Nonce)
+		fmt.Printf("PoW: %s\n\n", strconv.FormatBool(pow.Validate()))
 	}
 }
