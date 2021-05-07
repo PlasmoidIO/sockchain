@@ -5,6 +5,7 @@ type Block struct {
 	Data     []byte
 	PrevHash []byte
 	Nonce    int
+	Proof    *ProofOfWork
 }
 
 type BlockChain struct {
@@ -20,6 +21,8 @@ func CreateBlock(data string, prevHash []byte) *Block {
 	}
 	pow := NewProof(block)
 	nonce, hash := pow.Run()
+
+	block.Proof = pow
 	block.Nonce = nonce
 	block.Hash = hash
 
